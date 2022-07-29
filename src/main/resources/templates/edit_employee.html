@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Create New Employee</title>
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+</head>
+<body>
+    <div align="center">
+        <h1>Create New Employee</h1>
+        <br />
+        <form id="registration_form" action="#" th:action="@{/save}" th:object="${employee}"
+            method="post">
+ 
+            
+            <table border="0" cellpadding="10">
+            
+            <tr>             
+                    <td>Product ID:</td>
+                    <td>
+                        <input style="background-color:yellow;" type="text" th:field="*{id}" readonly="readonly" />
+                    </td>
+                </tr> 
+                <tr>
+                    <td>Employee Name:</td>
+                    <td><input id="name" type="text" th:field="*{name}" />
+                    <span class="error_form" id="name_error_message"></span></td>
+                    
+                </tr>
+                <tr>
+                    <td>Phone number</td>
+                    <td><input id="phone" type="number" th:field="*{phone}" />
+                    <span class="error_form" id="phone_error_message"></span></td>
+                </tr>
+                <tr>
+                    <td>Complain type:</td>
+                    <td>
+                    <!-- <input type="text" th:field="*{complain}" /> -->
+                    <div class="custom-select" style="width:200px;">
+					  <select th:field="*{complain}">
+					    <option th:value="'hardware'" >hardware</option>
+					    <option th:value="'installation'">installation</option>
+					    <option th:value="'canteen'" >canteen</option>
+					  </select>
+				   </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td><input type="radio" id="male" th:field="*{gender}" value="male">
+                             <label for="male">Male</label><br>
+                        <input type="radio" id="female" th:field="*{gender}" value="female">
+                             <label for="female">Female</label><br>
+                        <input type="radio" id="other" th:field="*{gender}" value="other">
+                             <label for="other">Other</label></td>
+                </tr>
+                
+                <tr>
+                    <td>Email id</td>
+                    <td><input id="email" type="text" th:field="*{email}" />
+                    <span class="error_form" id="email_error_message"></span></td>
+                </tr>
+                
+                <tr>
+                    <td>description</td>
+                    <td><input id="description" type="text" th:field="*{description}" />
+                    <span class="error_form" id="description_error_message"></span></td>
+                </tr>
+                 <tr>
+                    <td>ComplainId</td>
+                    <td><input type="text" readonly="readonly" th:field="*{complainId}" /></td>
+                </tr>
+             
+             
+                                            
+                <tr>
+                    <td colspan="2"><button type="submit">Save</button> </td>
+                </tr>
+                
+            </table>
+            
+        </form>
+    </div>
+    <script type="text/javascript">
+    
+    $(function(){
+    	
+    	$("#name_error_message").hide();
+    	$("#phone_error_message").hide();
+    	$("#email_error_message").hide();
+    	$("#description_error_message").hide();
+    	
+    	var error_name=false;
+    	var error_phone=false;
+    	var error_email=false;
+    	var error_description=false;
+    	
+    	$("#name").focusout(function(){
+    		check_name();
+    	});
+    	
+    	$("#phone").focusout(function(){
+    		check_phone();
+    	});
+    	
+    	$("#email").focusout(function(){
+    		check_email();
+    	});
+    	
+    	$("#description").focusout(function(){
+    		check_description();
+    	});
+    	
+    	function check_name() {
+            var pattern = /^[a-zA-Z/s]*$/;
+            var fname = $("#name").val();
+            if (pattern.test(fname) && fname !== '') {
+               $("#name_error_message").hide();
+               $("name").css("border-bottom","2px solid green");
+            } else {
+               $("#name_error_message").html("Should contain only Characters no numerics").css("border-bottom","2px solid red");
+               $("#name_error_message").show();
+               $("#fname").css("border-bottom","2px solid red");
+               error_name = true;
+            }
+         }
+    	
+    	function check_phone() {
+            var pattern = /^[0-9]*$/;
+            var phone = $("#phone").val();
+            var phonelen = $("#phone").val().length;
+            if (pattern.test(phone) && phone !== '' && phonelen==10) {
+               $("#phone_error_message").hide();
+               $("phone").css("border-bottom","2px solid green");
+            }else {
+            
+               $("#phone_error_message").html("Should contain only  numbers and a 10 digit number !").css("border-bottom","2px solid red");
+               $("#phone_error_message").show();
+               $("#phone").css("border-bottom","2px solid red");
+               error_phone = true;
+            }
+         }
+    	
+    	function check_email() {
+            var pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            var email = $("#email").val();
+            if (pattern.test(email) && email !== '') {
+               $("#email_error_message").hide();
+               $("email").css("border-bottom","2px solid green");
+            } else {
+               $("#email_error_message").html("This is not an email format ! Please enter email properly").css("border-bottom","2px solid red");
+               $("#email_error_message").show();
+               $("#email").css("border-bottom","2px solid red");
+               error_email = true;
+            }
+         }
+    	
+    	function check_description() {
+           // var pattern = /^[a-zA-Z]*$/;
+            var description = $("#description").val().length;
+            if (description <30) {
+               $("#description_error_message").hide();
+               $("description").css("border-bottom","2px solid green");
+            } else {
+               $("#description_error_message").html("Words are more than 30 . Please reduce words !").css("border-bottom","2px solid red");
+               $("#description_error_message").show();
+               $("#description").css("border-bottom","2px solid red");
+               error_description = true;
+            }
+         }
+    	
+    	
+    	$("#registration_form").submit(function() {
+            error_name = false;
+            error_phone = false;
+            error_email = false;
+            error_description = false;
+            
+
+            check_name();
+            check_phone();
+            check_email();
+            check_description();
+            
+
+            if (error_name === false && error_phone === false && error_email === false && error_description === false) {
+               alert("Registration Successfull");
+               return true;
+            } else {
+               alert("Please Fill the form Correctly");
+               return false;
+            }
+
+
+         });
+    	
+    })
+    
+    </script>
+</body>
+</html>

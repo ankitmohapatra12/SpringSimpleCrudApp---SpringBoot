@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Complains</title>
+</head>
+<style>
+thead{
+background-color:lightgrey;
+}
+
+table{
+border-spacing: 0px;
+}
+</style>
+<body>
+<div align="center"><h1>Employee Complaints</h1></div>
+<div align="center"><a href="/new">File a Complain</a></div>
+<div align="center">
+<table border="1" cellpadding="10">
+ 	<thead>
+ 		<tr>
+ 			<td>SL NO.</td>
+ 			<td>NAME</td>
+ 			<td>PHONE</td>
+ 			<td>COMPLAIN</td>
+ 			<td>GENDER</td>
+ 			<td>EMAIL ID</td>
+ 			<td>DESCRIPTION</td>
+ 			<td>COMPLAINID</td>
+ 			<td>ACTION</td>
+ 			
+ 		</tr>
+ 	</thead>
+ 	<tbody>
+ 	<tr th:each="employee : ${employees}">
+ 		<td th:text="${employee.id}">SL NO.</td>
+ 		<td th:text="${employee.name}">NAME</td>
+ 		<td th:text="${employee.phone}">PHONE</td>
+ 		<td th:text="${employee.Complain}">COMPLAIN</td>
+ 		<td th:text="${employee.gender}">GENDER</td>
+ 		<td th:text="${employee.email}">EMAIL</td>
+ 		<td th:text="${employee.description}">description</td>
+ 		<td th:text="${employee.complainId}">complainId</td>
+ 		
+ 		  <td> <a th:href="@{'/edit/' + ${employee.id}}">Edit</a>
+                    &nbsp;&nbsp;&nbsp;
+               <a th:href="@{'/delete/' + ${employee.id}}">Delete</a>
+                </td>
+ 	</tr>
+ 	</tbody>
+</table>
+</div>
+</body>
+</html>
